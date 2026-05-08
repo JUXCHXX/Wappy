@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<title>Wappy — Tu negocio responde solo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+/* ─── DESIGN TOKENS ─────────────────────────────────── */
+:root {
+  --white:   #FFFFFF;
+  --snow:    #F7F9FF;
+  --pale:    #EEF3FF;
+  --ice:     #E0EAFF;
+  --blue-xs: #C5D8FF;
+  --blue-sm: #7AAEFF;
+  --blue:    #2B6EE8;
+  --blue-dk: #1A4FBF;
+  --navy:    #0D2455;
+  --ink:     #0A1A3B;
+  --mid:     #5A6E8E;
+  --light:   #8FA3BF;
+  --green:   #00C97A;
+  --gold:    #F0B429;
+  --shadow:  rgba(27,79,191,0.12);
+  --shadow2: rgba(27,79,191,0.22);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--white);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--pale)}
+::-webkit-scrollbar-thumb{background:var(--blue-sm);border-radius:3px}
+
+/* ─── NAV ───────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:74px;
+  background:rgba(255,255,255,0.9);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--ice);
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 4px 32px var(--shadow)}
+
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:700;
+  color:var(--navy);text-decoration:none;
+  letter-spacing:-.3px;
+  line-height:0;
+}
+.brand-logo{display:block;width:168px;height:auto}
+.footer-logo .brand-logo{width:132px}
+.logo-icon{
+  width:38px;height:38px;border-radius:11px;
+  background:linear-gradient(135deg,var(--blue),#5B9EFF);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(43,110,232,.35);
+  flex-shrink:0;
+}
+.nav-links{display:flex;align-items:center;gap:32px;margin-left:auto}
+.nav-links a{
+  font-size:14px;font-weight:400;
+  color:var(--mid);text-decoration:none;
+  transition:color .2s;letter-spacing:.01em;
+  white-space:nowrap;
+}
+.nav-links a:hover{color:var(--navy)}
+.nav-toggle{
+  display:none;align-items:center;justify-content:center;
+  width:44px;height:44px;
+  border:1px solid var(--ice);border-radius:13px;
+  background:rgba(255,255,255,.96);
+  color:var(--navy);cursor:pointer;
+  box-shadow:0 8px 22px rgba(27,79,191,.1);
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+}
+.nav-toggle:hover{
+  transform:translateY(-1px);
+  border-color:var(--blue-xs);
+  box-shadow:0 12px 28px rgba(27,79,191,.16);
+}
+.nav-toggle svg{display:block}
+.nav-cta{
+  background:var(--blue)!important;
+  color:var(--white)!important;
+  padding:10px 24px!important;
+  border-radius:9px;font-weight:500!important;
+  box-shadow:0 4px 18px rgba(43,110,232,.3);
+  transition:all .2s!important;
+}
+.nav-cta:hover{background:var(--blue-dk)!important;transform:translateY(-1px)!important;box-shadow:0 6px 24px rgba(43,110,232,.4)!important}
+
+/* ─── HERO ──────────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:130px 6% 90px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg, #EEF3FF 0%, #FFFFFF 60%);
+}
+
+/* decorative circles */
+.hero-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(43,110,232,.08);
+  pointer-events:none;
+}
+.ring1{width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.ring2{width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.ring3{width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(43,110,232,.15)}
+
+/* blue blob */
+.blob{
+  position:absolute;
+  background:radial-gradient(circle,rgba(43,110,232,.09),transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.blob1{width:600px;height:600px;top:-150px;left:-100px}
+.blob2{width:500px;height:500px;bottom:-100px;right:-100px}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(90deg,rgba(0,201,122,.1),rgba(43,110,232,.08));
+  border:1px solid rgba(0,201,122,.25);
+  border-radius:100px;padding:7px 20px;
+  font-size:13px;font-weight:500;color:#008B54;
+  margin-bottom:36px;
+  animation:fadeUp .5s ease both;
+}
+.badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,7.5vw,90px);
+  font-weight:700;line-height:1.02;
+  color:var(--navy);
+  max-width:900px;margin:0 auto 6px;
+  animation:fadeUp .6s .1s ease both;
+}
+.hero h1 .accent{
+  background:linear-gradient(90deg,var(--blue),#5B9EFF);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero h1 em{
+  font-style:italic;color:var(--blue);
+}
+
+.hero-sub{
+  font-size:clamp(15px,1.8vw,19px);
+  font-weight:300;color:var(--mid);
+  max-width:500px;margin:24px auto 48px;
+  line-height:1.75;
+  animation:fadeUp .6s .2s ease both;
+}
+
+.hero-btns{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .6s .3s ease both;
+}
+.btn-p{
+  background:linear-gradient(135deg,var(--blue),#5B9EFF);
+  color:var(--white);padding:15px 36px;border-radius:11px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  display:inline-flex;align-items:center;gap:9px;
+  box-shadow:0 8px 32px rgba(43,110,232,.38);
+  transition:all .22s;position:relative;overflow:hidden;
+}
+.btn-p::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.btn-p:hover::after{opacity:1}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(43,110,232,.48)}
+
+.btn-g{
+  background:white;color:var(--navy);
+  padding:15px 36px;border-radius:11px;
+  font-size:15px;font-weight:400;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--ice);
+  box-shadow:0 2px 12px var(--shadow);
+  transition:all .22s;
+}
+.btn-g:hover{border-color:var(--blue-xs);transform:translateY(-1px);box-shadow:0 6px 20px var(--shadow)}
+
+.hero-note{
+  font-size:12px;color:var(--light);margin-top:18px;
+  animation:fadeUp .6s .4s ease both;
+  letter-spacing:.02em;
+}
+.hero-note span{color:var(--green);font-weight:500}
+
+/* ─── STATS ─────────────────────────────────────────── */
+.stats{
+  background:var(--navy);
+  padding:44px 6%;
+  display:flex;justify-content:center;gap:clamp(32px,7vw,100px);
+  flex-wrap:wrap;
+}
+.stat{text-align:center}
+.stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:44px;font-weight:700;
+  color:var(--white);line-height:1;
+}
+.stat-n span{color:var(--blue-sm);font-style:italic}
+.stat-l{font-size:12px;color:rgba(255,255,255,.45);margin-top:5px;letter-spacing:.08em;text-transform:uppercase}
+
+/* ─── BANNERS ───────────────────────────────────────── */
+.banners{
+  padding:80px 6%;
+  max-width:1100px;margin:0 auto;
+}
+.banner-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:680px){.banner-grid{grid-template-columns:1fr}}
+
+.bann{
+  border-radius:22px;padding:40px 36px;
+  position:relative;overflow:hidden;
+}
+.bann-trial{
+  background:linear-gradient(135deg,#F0FFF9,#E8F5FF);
+  border:1px solid rgba(0,201,122,.2);
+}
+.bann-ref{
+  background:linear-gradient(135deg,#FFFBF0,#FFF3E0);
+  border:1px solid rgba(240,180,41,.25);
+}
+.bann-deco{
+  position:absolute;top:-40px;right:-40px;
+  width:160px;height:160px;border-radius:50%;
+  opacity:.12;
+}
+.bann-trial .bann-deco{background:var(--green)}
+.bann-ref .bann-deco{background:var(--gold)}
+.bann-ico{font-size:40px;margin-bottom:18px;display:block}
+.bann-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:700;margin-bottom:12px;
+}
+.bann-trial .bann-title{color:#00704A}
+.bann-ref .bann-title{color:#A05C00}
+.bann-text{font-size:15px;font-weight:300;color:var(--mid);line-height:1.75}
+.bann-text strong{color:var(--ink);font-weight:500}
+.bann-tag{
+  display:inline-block;margin-top:20px;
+  padding:5px 16px;border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+}
+.bann-trial .bann-tag{background:rgba(0,201,122,.12);color:#00704A}
+.bann-ref .bann-tag{background:rgba(240,180,41,.15);color:#A05C00}
+
+/* ─── SECTION SHARED ────────────────────────────────── */
+.sec{padding:100px 6%;max-width:1100px;margin:0 auto}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:18px;
+}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--blue)}
+h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4.5vw,56px);font-weight:700;
+  color:var(--navy);line-height:1.08;margin-bottom:14px;
+}
+.sec-sub{
+  font-size:17px;font-weight:300;color:var(--mid);
+  max-width:440px;line-height:1.75;margin-bottom:60px;
+}
+
+/* ─── HOW ───────────────────────────────────────────── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.step{
+  background:var(--snow);border:1px solid var(--ice);
+  border-radius:18px;padding:30px 24px;
+  transition:all .28s;position:relative;overflow:hidden;
+}
+.step::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),#5B9EFF);
+  transform:scaleX(0);transform-origin:left;transition:transform .35s;
+}
+.step:hover{border-color:var(--blue-xs);transform:translateY(-4px);box-shadow:0 12px 32px var(--shadow)}
+.step:hover::before{transform:scaleX(1)}
+.step-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:60px;font-weight:700;
+  color:rgba(43,110,232,.1);line-height:1;margin-bottom:14px;
+}
+.step-t{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px}
+.step-d{font-size:13px;font-weight:300;color:var(--mid);line-height:1.7}
+
+/* ─── FEATURES ──────────────────────────────────────── */
+.feat-bg{background:var(--snow);padding:100px 0;border-top:1px solid var(--ice);border-bottom:1px solid var(--ice)}
+.feat-inner{max-width:1100px;margin:0 auto;padding:0 6%}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:48px}
+.feat{
+  background:var(--white);border:1px solid var(--ice);
+  border-radius:16px;padding:28px;transition:all .25s;
+}
+.feat:hover{border-color:var(--blue-xs);box-shadow:0 8px 28px var(--shadow);transform:translateY(-3px)}
+.feat.wide{grid-column:span 2;background:linear-gradient(135deg,rgba(43,110,232,.06),rgba(91,158,255,.03));border-color:rgba(43,110,232,.18)}
+@media(max-width:640px){.feat.wide{grid-column:span 1}}
+.feat-ico{
+  width:46px;height:46px;border-radius:12px;
+  background:var(--pale);border:1px solid var(--ice);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:16px;
+}
+.feat-t{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px}
+.feat-d{font-size:13px;font-weight:300;color:var(--mid);line-height:1.7}
+
+/* ─── PRICING ───────────────────────────────────────── */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;align-items:start}
+.plan{
+  background:var(--white);border:1px solid var(--ice);
+  border-radius:22px;padding:36px 30px;
+  position:relative;transition:transform .22s;
+}
+.plan:hover{transform:translateY(-4px)}
+.plan.pop{
+  background:var(--navy);
+  border-color:transparent;
+  box-shadow:0 20px 60px rgba(13,36,85,.25),0 0 0 1px rgba(43,110,232,.4);
+}
+.pill{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--blue),#5B9EFF);
+  color:white;font-size:11px;font-weight:600;
+  padding:5px 20px;border-radius:100px;
+  letter-spacing:.07em;text-transform:uppercase;
+  white-space:nowrap;box-shadow:0 4px 16px rgba(43,110,232,.4);
+}
+.plan-name{
+  font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:16px;
+}
+.pop .plan-name{color:var(--blue-sm)}
+.plan-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:58px;font-weight:700;color:var(--navy);
+  line-height:1;margin-bottom:4px;
+}
+.pop .plan-price{color:var(--white)}
+.plan-per{font-size:13px;color:var(--light);margin-bottom:10px}
+.pop .plan-per{color:rgba(255,255,255,.4)}
+.plan-trial{
+  display:inline-block;
+  background:rgba(0,201,122,.12);border:1px solid rgba(0,201,122,.22);
+  color:var(--green);font-size:12px;font-weight:500;
+  padding:4px 14px;border-radius:100px;margin-bottom:28px;
+}
+.pop .plan-trial{background:rgba(0,201,122,.18);border-color:rgba(0,201,122,.3)}
+.plan-hr{height:1px;background:var(--ice);margin-bottom:22px}
+.pop .plan-hr{background:rgba(255,255,255,.1)}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:30px}
+.plan-feats li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;font-weight:300;color:var(--mid);line-height:1.5;
+}
+.pop .plan-feats li{color:rgba(255,255,255,.65)}
+.ck{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;
+  background:var(--pale);display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--blue);
+}
+.pop .ck{background:rgba(43,110,232,.25);color:var(--blue-sm)}
+.plan-btn{
+  display:block;width:100%;text-align:center;
+  padding:13px;border-radius:10px;font-size:14px;font-weight:600;
+  text-decoration:none;cursor:pointer;transition:all .2s;border:none;
+}
+.btn-outline{
+  background:transparent;border:1px solid var(--ice);
+  color:var(--blue);
+}
+.btn-outline:hover{border-color:var(--blue-xs);background:var(--pale)}
+.btn-fill{
+  background:linear-gradient(135deg,var(--blue),#5B9EFF);
+  color:white;box-shadow:0 8px 28px rgba(43,110,232,.4);
+}
+.btn-fill:hover{box-shadow:0 12px 36px rgba(43,110,232,.55);transform:translateY(-1px)}
+
+/* ─── REFERRAL ──────────────────────────────────────── */
+.ref-section{
+  background:linear-gradient(135deg,#FFF9E8,#FFF4CC);
+  border-top:1px solid rgba(240,180,41,.18);
+  border-bottom:1px solid rgba(240,180,41,.18);
+  padding:90px 6%;text-align:center;
+}
+.ref-section h2{
+  background:linear-gradient(90deg,#C47A00,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ref-flow{
+  display:flex;justify-content:center;align-items:center;
+  gap:clamp(16px,4vw,40px);flex-wrap:wrap;margin:52px 0;
+}
+.ref-step{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:160px}
+.ref-num{
+  width:52px;height:52px;border-radius:50%;
+  background:white;border:1.5px solid rgba(240,180,41,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#A05C00;
+  box-shadow:0 4px 16px rgba(240,180,41,.15);
+}
+.ref-arrow{font-size:20px;color:rgba(240,180,41,.5);align-self:center;margin-bottom:20px}
+.ref-l{font-size:14px;font-weight:300;color:#8A6000;line-height:1.55;text-align:center}
+.ref-l strong{color:#5A3D00;font-weight:600;display:block;font-size:15px;margin-bottom:3px}
+.btn-gold{
+  background:linear-gradient(135deg,#F0B429,#FFCC55);
+  color:#5A3D00;padding:15px 36px;border-radius:11px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 8px 28px rgba(240,180,41,.35);
+  transition:all .22s;
+}
+.btn-gold:hover{box-shadow:0 12px 36px rgba(240,180,41,.5);transform:translateY(-2px)}
+
+/* ─── TESTIMONIALS ──────────────────────────────────── */
+.testis{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:48px}
+.testi{
+  background:var(--white);border:1px solid var(--ice);
+  border-radius:18px;padding:30px;transition:all .25s;
+}
+.testi:hover{border-color:var(--blue-xs);box-shadow:0 8px 28px var(--shadow)}
+.stars{color:var(--gold);font-size:14px;margin-bottom:14px;letter-spacing:3px}
+.testi-q{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:18px;
+  color:var(--navy);line-height:1.65;margin-bottom:20px;
+}
+.testi-auth{display:flex;align-items:center;gap:12px}
+.av{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),#5B9EFF);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:white;
+}
+.auth-name{font-size:14px;font-weight:500;color:var(--navy)}
+.auth-biz{font-size:12px;color:var(--light)}
+.auth-tag{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(43,110,232,.5)}
+
+/* ─── CTA FINAL ─────────────────────────────────────── */
+.cta-end{
+  padding:120px 6%;text-align:center;
+  background:linear-gradient(180deg,var(--white),var(--pale));
+  position:relative;overflow:hidden;
+}
+.cta-blob{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(43,110,232,.07),transparent 65%);
+  pointer-events:none;
+}
+.cta-end h2{margin-bottom:14px}
+.cta-end p{
+  font-size:18px;font-weight:300;color:var(--mid);
+  max-width:460px;margin:0 auto 48px;line-height:1.75;
+}
+.cta-note{font-size:12px;color:var(--light);margin-top:18px;letter-spacing:.02em}
+.cta-note span{color:var(--green);font-weight:500}
+
+/* ─── FOOTER ────────────────────────────────────────── */
+footer{
+  background:var(--navy);
+  padding:44px 6%;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:700;color:var(--white);
+  text-decoration:none;display:flex;align-items:center;gap:9px;
+  line-height:0;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:18px;
+  background:#FFFFFF;
+  border:1px solid rgba(13,36,85,.08);
+  box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+.footer-logo .brand-logo{width:136px;filter:drop-shadow(0 3px 10px rgba(0,0,0,.18))}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:white}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.25)}
+
+/* ─── ANIMATIONS ────────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ────────────────────────────────────── */
+@media(max-width:640px){
+  nav{
+    height:74px;
+    padding:0 4.5%;
+    gap:12px;
+  }
+  .brand-logo{width:150px}
+  .nav-toggle{display:flex;margin-left:auto}
+  .nav-links{
+    position:absolute;
+    top:calc(100% + 10px);
+    left:4.5%;
+    right:4.5%;
+    margin-left:0;
+    padding:12px;
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px;
+    background:rgba(255,255,255,.98);
+    border:1px solid var(--ice);
+    border-radius:18px;
+    box-shadow:0 18px 40px rgba(13,36,85,.14);
+    opacity:0;
+    transform:translateY(-10px);
+    pointer-events:none;
+    transition:opacity .22s ease,transform .22s ease;
+  }
+  nav.menu-open .nav-links{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .nav-links a{
+    font-size:14px;
+    padding:12px 14px;
+    border-radius:12px;
+    background:var(--snow);
+  }
+  .nav-links a:hover{background:var(--pale)}
+  .nav-cta{
+    padding:12px 18px!important;
+    text-align:center;
+  }
+  .hero{padding-top:148px}
+  .stats{gap:28px}
+  .banner-grid,.plans,.feats{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+  .footer-links{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="WappyLogo.png" alt="Wappy" class="brand-logo"/>
+  </a>
+  <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M3 4.5h12M3 9h12M3 13.5h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#como">Cómo funciona</a>
+    <a href="#planes">Planes</a>
+    <a href="#referidos">Referidos</a>
+    <a href="https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy" class="nav-cta" target="_blank" rel="noopener noreferrer">Empezar gratis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ring ring1"></div>
+  <div class="hero-ring ring2"></div>
+  <div class="hero-ring ring3"></div>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+
+  <div class="badge">
+    <span class="badge-dot"></span>
+    2 semanas gratis para nuevos negocios · Sin tarjeta
+  </div>
+
+  <h1>
+    Tu WhatsApp trabaja<br>
+    <em>mientras tú</em> descansas<br>
+    <span class="accent">con Inteligencia Artificial</span>
+  </h1>
+
+  <p class="hero-sub">Automatiza respuestas, agenda citas y cobra abonos en piloto automático. Wappy hace el trabajo — tú te llevas los clientes.</p>
+
+  <div class="hero-btns">
+    <a href="https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy" class="btn-p" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.6 0 0 3.6 0 8c0 1.4.4 2.7 1 3.9L0 16l4.2-1C5.4 15.6 6.7 16 8 16c4.4 0 8-3.6 8-8s-3.6-8-8-8zm3.9 11c-.2.5-.9 1-1.3 1-.4.1-.9.1-2.7-.6-2.3-.9-3.8-3.3-3.9-3.5-.2-.2-.9-1.2-.9-2.2 0-1 .6-1.5.8-1.8.2-.2.4-.3.6-.3h.4c.2 0 .4 0 .5.4l.8 1.8c.1.1.1.3 0 .5l-.3.4c-.1.1-.3.3-.1.5.2.3.7 1 1.5 1.7.9.8 1.6 1 1.9 1.1.2.1.4 0 .5-.1.2-.2.6-.7.8-.9.2-.2.3-.2.6-.1l1.4.7c.2.1.3.2.3.3.1.1.1.4-.1.8z"/></svg>
+      Empezar 2 semanas gratis
+    </a>
+    <a href="#como" class="btn-g">Ver cómo funciona →</a>
+  </div>
+  <p class="hero-note"><span>✓ Sin tarjeta de crédito</span> &nbsp;·&nbsp; <span>✓ Listo en 24h</span> &nbsp;·&nbsp; <span>✓ Cancela cuando quieras</span></p>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat reveal">
+    <div class="stat-n"><span>24</span>/7</div>
+    <div class="stat-l">Disponibilidad total</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-n">&lt;<span>1</span>s</div>
+    <div class="stat-l">Tiempo de respuesta</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-n"><span>10</span>%</div>
+    <div class="stat-l">Descuento por referir</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-n">$<span>0</span></div>
+    <div class="stat-l">Costo de instalación</div>
+  </div>
+</div>
+
+<!-- BANNERS TRIAL + REFERIDO -->
+<div class="banners">
+  <div class="eyebrow reveal">Beneficios exclusivos</div>
+  <h2 class="reveal">Más razones para<br>empezar hoy</h2>
+
+  <div class="banner-grid">
+    <div class="bann bann-trial reveal">
+      <div class="bann-deco"></div>
+      <span class="bann-ico">🎁</span>
+      <div class="bann-title">2 Semanas Gratis</div>
+      <p class="bann-text">
+        Si eres nuevo en Wappy, tienes <strong>14 días completamente gratis</strong> para probar tu bot con todos los clientes que quieras. Sin límites, sin tarjeta, sin letra pequeña.
+        <br/><br/>
+        Al final del trial decides si sigues — y si decides quedarte, te activamos en segundos.
+      </p>
+      <span class="bann-tag">Sin tarjeta requerida</span>
+    </div>
+
+    <div class="bann bann-ref reveal">
+      <div class="bann-deco"></div>
+      <span class="bann-ico">🤝</span>
+      <div class="bann-title">10% por Recomendar</div>
+      <p class="bann-text">
+        ¿Le contaste a un amigo de Wappy y se suscribió? Tú obtienes un <strong>10% de descuento en tu plan durante 3 meses</strong> completos.
+        <br/><br/>
+        Recomienda a 3 negocios y prácticamente pagas el 70% de tu plan. Sin tope de referidos.
+      </p>
+      <span class="bann-tag">Acumula múltiples descuentos</span>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="como" style="background:var(--snow);border-top:1px solid var(--ice);border-bottom:1px solid var(--ice);padding:100px 0">
+  <div class="sec" style="padding-top:0;padding-bottom:0">
+    <div class="eyebrow reveal">Cómo funciona</div>
+    <h2 class="reveal">De cero a bot activo<br>en menos de un día</h2>
+    <p class="sec-sub reveal">Sin código, sin técnicos. Tú nos cuentas de tu negocio, nosotros hacemos el resto.</p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-n">01</div>
+        <div class="step-t">Nos cuentas de tu negocio</div>
+        <p class="step-d">Servicios, precios, horarios y cómo quieres que hable tu bot. Todo en una llamada rápida.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">02</div>
+        <div class="step-t">Configuramos tu bot</div>
+        <p class="step-d">Armamos respuestas, flujo de agendamiento y verificación de pagos personalizado para ti.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">03</div>
+        <div class="step-t">Escaneas el QR</div>
+        <p class="step-d">Un solo escaneo desde tu WhatsApp Business y el bot queda vivo para siempre.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">04</div>
+        <div class="step-t">Tú descansas, él trabaja</div>
+        <p class="step-d">Responde clientes, agenda citas, verifica pagos y te manda un reporte cada noche.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="feat-bg">
+  <div class="feat-inner">
+    <div class="eyebrow reveal">Funciones</div>
+    <h2 class="reveal">Todo lo que necesitas,<br>nada que no uses</h2>
+
+    <div class="feats">
+      <div class="feat wide reveal">
+        <div class="feat-ico">🤖</div>
+        <div class="feat-t">IA que habla como tú</div>
+        <p class="feat-d">Nuestro modelo de inteligencia artificial responde cualquier pregunta de tus clientes en el tono y voz de tu negocio. No suena a robot. Suena a ti.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico">📅</div>
+        <div class="feat-t">Agendamiento automático</div>
+        <p class="feat-d">Pide nombre, teléfono, fecha y servicio. Todo en una sola conversación fluida.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico">💳</div>
+        <div class="feat-t">Verificación de pagos</div>
+        <p class="feat-d">El cliente manda el comprobante. Tú confirmas con un "SI". El bot hace el resto.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico">🧾</div>
+        <div class="feat-t">Factura automática</div>
+        <p class="feat-d">Al confirmar el pago, el bot envía comprobante con código único, valor y saldo pendiente.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico">📊</div>
+        <div class="feat-t">Reporte nocturno</div>
+        <p class="feat-d">Cada noche a las 9:50 PM te llega el resumen de citas del día siguiente directo a tu WhatsApp.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico">🔄</div>
+        <div class="feat-t">Reagendamiento con código</div>
+        <p class="feat-d">Cada cita tiene un código único. El cliente reagenda solo con escribir ese código.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico">⚡</div>
+        <div class="feat-t">Panel on/off desde el celular</div>
+        <p class="feat-d">Enciende y apaga tu bot con un botón desde cualquier lugar, sin abrir el computador.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="planes" class="sec">
+  <div class="eyebrow reveal">Planes</div>
+  <h2 class="reveal">Precio honesto,<br>valor real</h2>
+  <p class="sec-sub reveal">Todos los planes incluyen 2 semanas gratis. Sin costos de instalación ni permanencia.</p>
+
+  <div class="plans">
+
+    <!-- BÁSICO -->
+    <div class="plan reveal">
+      <div class="plan-name">Básico</div>
+      <div class="plan-price">$80k</div>
+      <div class="plan-per">COP al mes</div>
+      <div class="plan-trial">🎁 2 semanas gratis</div>
+      <div class="plan-hr"></div>
+      <ul class="plan-feats">
+        <li><span class="ck">✓</span>Respuestas predefinidas ilimitadas</li>
+        <li><span class="ck">✓</span>Flujo de agendamiento básico</li>
+        <li><span class="ck">✓</span>Panel de control on/off</li>
+        <li><span class="ck">✓</span>1 número WhatsApp Business</li>
+        <li><span class="ck">✓</span>Soporte por WhatsApp</li>
+      </ul>
+      <a href="https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy" class="plan-btn btn-outline" target="_blank" rel="noopener noreferrer">Empezar 2 semanas gratis →</a>
+    </div>
+
+    <!-- PRO — POPULAR -->
+    <div class="plan pop reveal">
+      <div class="pill">⭐ Más popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">$120k</div>
+      <div class="plan-per">COP al mes</div>
+      <div class="plan-trial">🎁 2 semanas gratis</div>
+      <div class="plan-hr"></div>
+      <ul class="plan-feats">
+        <li><span class="ck">✓</span>Todo lo del plan Básico</li>
+        <li><span class="ck">✓</span>IA Groq — responde lo que no está programado</li>
+        <li><span class="ck">✓</span>Agendamiento completo con calendario</li>
+        <li><span class="ck">✓</span>Verificación de comprobantes de pago</li>
+        <li><span class="ck">✓</span>Factura automática con código único</li>
+        <li><span class="ck">✓</span>Reporte nocturno diario</li>
+        <li><span class="ck">✓</span>Reagendamiento con código</li>
+      </ul>
+      <a href="https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy" class="plan-btn btn-fill" target="_blank" rel="noopener noreferrer">Empezar 2 semanas gratis →</a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="plan reveal">
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">$180k</div>
+      <div class="plan-per">COP al mes</div>
+      <div class="plan-trial">🎁 2 semanas gratis</div>
+      <div class="plan-hr"></div>
+      <ul class="plan-feats">
+        <li><span class="ck">✓</span>Todo lo del plan Pro</li>
+        <li><span class="ck">✓</span>Google Calendar integrado</li>
+        <li><span class="ck">✓</span>Cobro automático con Wompi</li>
+        <li><span class="ck">✓</span>Transcripción de audios de WhatsApp</li>
+        <li><span class="ck">✓</span>Recordatorios automáticos de citas</li>
+        <li><span class="ck">✓</span>Personalización total de mensajes</li>
+        <li><span class="ck">✓</span>Soporte prioritario 24/7</li>
+        <li><span class="ck">✓</span>Actualizaciones sin costo adicional</li>
+      </ul>
+      <a href="https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy" class="plan-btn btn-outline" target="_blank" rel="noopener noreferrer">Empezar 2 semanas gratis →</a>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;margin-top:30px;font-size:13px;color:var(--light)">
+    💛 ¿Ya tienes un plan? Recomienda Wappy y obtén <strong style="color:#A05C00">10% de descuento por 3 meses</strong>
+  </p>
+</div>
+
+<!-- REFERRAL -->
+<div id="referidos" class="ref-section">
+  <div class="eyebrow reveal" style="justify-content:center;color:#A05C00">Programa de referidos</div>
+  <h2 class="reveal" style="margin-bottom:12px">Recomienda y gana</h2>
+  <p style="font-size:17px;font-weight:300;color:#8A6000;max-width:480px;margin:0 auto;line-height:1.75" class="reveal">
+    Por cada negocio que recomiendes y se suscriba, tú recibes un <strong style="color:#5A3D00">10% de descuento durante 3 meses</strong>. Sin tope.
+  </p>
+
+  <div class="ref-flow">
+    <div class="ref-step reveal">
+      <div class="ref-num">1</div>
+      <div class="ref-l">
+        <strong>Comparte tu link</strong>
+        Te damos un link único de referido al registrarte
+      </div>
+    </div>
+    <div class="ref-arrow reveal">→</div>
+    <div class="ref-step reveal">
+      <div class="ref-num">2</div>
+      <div class="ref-l">
+        <strong>Tu amigo se suscribe</strong>
+        Cualquier negocio que entre por tu link cuenta
+      </div>
+    </div>
+    <div class="ref-arrow reveal">→</div>
+    <div class="ref-step reveal">
+      <div class="ref-num">3</div>
+      <div class="ref-l">
+        <strong>Tú ganas el 10%</strong>
+        Descuento aplicado 3 meses en tu plan, acumulable
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/573226429963?text=Hola,%20quiero%20mi%20link%20de%20referido%20de%20Wappy" class="btn-gold" target="_blank" rel="noopener noreferrer">🔗 Quiero mi link de referido →</a>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="sec">
+  <div class="eyebrow reveal">Testimonios</div>
+  <h2 class="reveal">Lo que dicen<br>quienes ya usan Wappy</h2>
+
+  <div class="testis">
+    <div class="testi reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-q">"Antes me quedaba hasta las 11pm respondiendo mensajes. Ahora el bot lo hace todo y yo solo confirmo los pagos con un 'SI'. Literalmente cambió mi vida."</p>
+      <div class="testi-auth">
+        <div class="av">O</div>
+        <div>
+          <div class="auth-name">Orianis Moreno</div>
+          <div class="auth-biz">Orianis Moreno Artist <span class="auth-tag">· by Wappy</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testi reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-q">"Mis clientas agendan a las 2am y todo queda confirmado. Al otro día tengo el día completo organizado sin haber tocado el celular. Vale cada peso."</p>
+      <div class="testi-auth">
+        <div class="av">V</div>
+        <div>
+          <div class="auth-name">Valentina Suárez</div>
+          <div class="auth-biz">Salón Valentina <span class="auth-tag">· by Wappy</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testi reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-q">"Recomendé a 4 negocios y ahora prácticamente tengo mi plan gratis. El programa de referidos es increíble — todos ganan."</p>
+      <div class="testi-auth">
+        <div class="av">M</div>
+        <div>
+          <div class="auth-name">Miguel Torres</div>
+          <div class="auth-biz">Estudio Ink <span class="auth-tag">· by Wappy</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div id="contacto" class="cta-end">
+  <div class="cta-blob"></div>
+  <div class="eyebrow reveal" style="justify-content:center">Empieza hoy</div>
+  <h2 class="reveal">Tu negocio merece<br>responder como uno grande</h2>
+  <p class="reveal">Escríbenos por WhatsApp y en menos de 24 horas tienes tu bot activo. Las primeras 2 semanas son completamente gratis.</p>
+  <div class="hero-btns reveal">
+    <a href="https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy" class="btn-p" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.6 0 0 3.6 0 8c0 1.4.4 2.7 1 3.9L0 16l4.2-1C5.4 15.6 6.7 16 8 16c4.4 0 8-3.6 8-8s-3.6-8-8-8zm3.9 11c-.2.5-.9 1-1.3 1-.4.1-.9.1-2.7-.6-2.3-.9-3.8-3.3-3.9-3.5-.2-.2-.9-1.2-.9-2.2 0-1 .6-1.5.8-1.8.2-.2.4-.3.6-.3h.4c.2 0 .4 0 .5.4l.8 1.8c.1.1.1.3 0 .5l-.3.4c-.1.1-.3.3-.1.5.2.3.7 1 1.5 1.7.9.8 1.6 1 1.9 1.1.2.1.4 0 .5-.1.2-.2.6-.7.8-.9.2-.2.3-.2.6-.1l1.4.7c.2.1.3.2.3.3.1.1.1.4-.1.8z"/></svg>
+      Empezar 2 semanas gratis
+    </a>
+    <a href="#planes" class="btn-g">Ver planes →</a>
+  </div>
+  <p class="cta-note reveal">
+    <span>✓ Sin tarjeta de crédito</span> &nbsp;·&nbsp;
+    <span>✓ Setup en 24 horas</span> &nbsp;·&nbsp;
+    <span>✓ Cancela cuando quieras</span>
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">
+    <img src="WappyLogo.png" alt="Wappy" class="brand-logo"/>
+  </a>
+  <div class="footer-links">
+    <a href="#como">Cómo funciona</a>
+    <a href="#planes">Planes</a>
+    <a href="#referidos">Referidos</a>
+    <a href="https://wa.me/573226429963" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </div>
+  <p class="footer-copy">© 2025 Wappy · Bot WhatsApp con IA · Colombia</p>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('on'), i*80);
+    }
+  });
+},{threshold:0.09});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Mobile nav
+const navbar = document.getElementById('navbar');
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if(navbar && navToggle && navLinks){
+  const closeMenu = () => {
+    navbar.classList.remove('menu-open');
+    navToggle.setAttribute('aria-expanded','false');
+  };
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navbar.classList.toggle('menu-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('click', e => {
+    if(window.innerWidth > 640) return;
+    if(!navbar.contains(e.target)) closeMenu();
+  });
+
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 640) closeMenu();
+  });
+}
+
+// Nav shadow on scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
+});
+</script>
+</body>
+</html>
