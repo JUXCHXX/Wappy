@@ -6,9 +6,16 @@ const WA_LINK = "https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%2
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen overflow-hidden grain bg-night text-white">
-      {/* Video bg */}
+      {/* Image bg for mobile */}
+      <img
+        src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1080&q=70"
+        alt="background"
+        className="absolute inset-0 w-full h-full object-cover opacity-80 md:hidden"
+      />
+
+      {/* Video bg for desktop */}
       <video
-        className="absolute inset-0 w-full h-full object-cover opacity-80"
+        className="absolute inset-0 w-full h-full object-cover opacity-80 hidden md:block"
         autoPlay
         muted
         loop
@@ -100,6 +107,9 @@ export function Hero() {
           </motion.ul>
         </div>
       </div>
+
+      {/* Gradient fade to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent via-blue/10 to-night pointer-events-none" />
     </section>
   );
 }
