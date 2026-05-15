@@ -31,9 +31,7 @@ export function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2.5">
-          <span className="w-9 h-9 rounded-xl bg-blue grid place-items-center shadow-glow-sm">
-            <img src="/favicon.png" alt="" className="w-6 h-6" />
-          </span>
+          <img src="/favicon.png" alt="Wappy" className="w-9 h-9" />
           <span className="font-display font-bold text-xl text-white tracking-tight">
             Wappy
           </span>

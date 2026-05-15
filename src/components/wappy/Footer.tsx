@@ -9,9 +9,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 grid md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="w-9 h-9 rounded-xl bg-blue grid place-items-center">
-                <img src="/favicon.png" alt="" className="w-6 h-6" />
-              </span>
+              <img src="/favicon.png" alt="Wappy" className="w-9 h-9" />
               <span className="font-display font-bold text-xl">Wappy</span>
             </div>
             <p className="mt-4 text-sm text-mist max-w-xs">
@@ -32,7 +30,7 @@ export function Footer() {
             <div className="font-mono text-xs uppercase tracking-[0.2em] text-sky">Contacto</div>
             <ul className="mt-4 space-y-2 text-sm text-mist">
               <li><a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a></li>
-              <li>Bogotá, Colombia</li>
+              <li>Barranquilla, Colombia</li>
             </ul>
           </div>
         </div>
