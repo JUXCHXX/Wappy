@@ -1,100 +1,74 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { TestimonialCard } from "@/components/ui/testimonial-cards";
 
-const items = [
+const testimonials = [
   {
-    name: "Laura M.",
-    business: "Salón Aurora · Medellín",
-    initials: "LM",
-    quote: "En la primera semana agendamos 38 citas sin levantar el teléfono. Wappy responde mejor que mi recepcionista.",
+    id: 1,
+    testimonial: "Antes me pasaba el día pegado al móvil respondiendo los mismos mensajes. Ahora Wappy lo gestiona todo y yo me centro en hacer crecer el negocio.",
+    author: "Carlos M. — Clínica dental, Madrid"
   },
   {
-    name: "Carlos R.",
-    business: "Estudio Tatto Negro · Bogotá",
-    initials: "CR",
-    quote: "Lo mejor: verifica los abonos solo. Antes perdía clientes por no contestar a tiempo. Hoy es imposible perderlos.",
+    id: 2,
+    testimonial: "Lo activamos un viernes por la tarde y el lunes ya teníamos citas agendadas que entraron solas durante el fin de semana. Impresionante.",
+    author: "Laura G. — Centro de estética, Barcelona"
   },
   {
-    name: "Daniela P.",
-    business: "Spa Lumière · Cali",
-    initials: "DP",
-    quote: "Setup en un día y listo. La IA habla con el tono de mi marca. Mis clientes ni se dan cuenta de que es un bot.",
+    id: 3,
+    testimonial: "Mis clientes reciben respuesta inmediata a cualquier hora. La confianza que eso genera no tiene precio.",
+    author: "Sergio P. — Asesoría financiera, Valencia"
+  },
+  {
+    id: 4,
+    testimonial: "Pensé que era complicado de configurar pero en menos de 24 horas ya estaba funcionando. El equipo de soporte es excelente.",
+    author: "Ana R. — Tienda online de moda, Sevilla"
+  },
+  {
+    id: 5,
+    testimonial: "Redujimos un 70% las consultas repetitivas por WhatsApp. Ahora solo atendemos lo que realmente necesita atención humana.",
+    author: "Miguel T. — Inmobiliaria, Bilbao"
   },
 ];
 
 export function Testimonials() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % items.length), 5000);
-    return () => clearInterval(t);
-  }, []);
-  const item = items[i];
+  const [positions, setPositions] = useState(
+    testimonials.map((_, i) => i === 0 ? "front" : i === 1 ? "middle" : "back")
+  );
+
+  const handleShuffle = () => {
+    setPositions((prev) => {
+      const next = [...prev];
+      next.push(next.shift()!);
+      return next;
+    });
+  };
 
   return (
-    <section className="bg-night text-white py-24 lg:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 dot-grid opacity-20" />
-      <div className="relative max-w-4xl mx-auto px-6 lg:px-10 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-sky">Testimonios</p>
-        <h2 className="mt-4 text-4xl lg:text-5xl font-bold">
-          Lo que dicen quienes ya usan Wappy
-        </h2>
+    <section id="testimonios" className="relative bg-night py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-blue/10 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-sky/10 blur-[140px]" />
+      </div>
 
-        <div className="mt-12 relative min-h-[280px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="glass rounded-3xl p-8 lg:p-12"
-            >
-              <div className="flex justify-center gap-1 mb-5">
-                {Array.from({ length: 5 }).map((_, k) => (
-                  <Star key={k} size={18} className="fill-gold text-gold" />
-                ))}
-              </div>
-              <blockquote className="font-display italic text-2xl lg:text-3xl leading-snug">
-                "{item.quote}"
-              </blockquote>
-              <div className="mt-8 flex items-center justify-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky to-blue grid place-items-center font-bold">
-                  {item.initials}
-                </div>
-                <div className="text-left">
-                  <div className="font-medium">{item.name}</div>
-                  <div className="text-xs text-mist">{item.business}</div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-blue">Testimonios</p>
+          <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-white">Lo que dicen nuestros clientes</h2>
+          <p className="mt-4 text-lg text-mist">Arrastra la tarjeta para ver más opiniones.</p>
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <button
-            onClick={() => setI((v) => (v - 1 + items.length) % items.length)}
-            className="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 grid place-items-center"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <div className="flex gap-2">
-            {items.map((_, k) => (
-              <button
-                key={k}
-                onClick={() => setI(k)}
-                className={`h-2 rounded-full transition-all ${
-                  k === i ? "w-8 bg-sky" : "w-2 bg-white/20"
-                }`}
+        <div className="mt-14 flex items-center justify-center h-[500px] relative">
+          <div className="relative w-full max-w-[400px] h-[450px]">
+            {testimonials.map((t, i) => (
+              <TestimonialCard
+                key={t.id}
+                handleShuffle={handleShuffle}
+                testimonial={t.testimonial}
+                author={t.author}
+                id={t.id}
+                position={positions[i]}
               />
             ))}
           </div>
-          <button
-            onClick={() => setI((v) => (v + 1) % items.length)}
-            className="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 grid place-items-center"
-          >
-            <ChevronRight size={18} />
-          </button>
         </div>
       </div>
     </section>

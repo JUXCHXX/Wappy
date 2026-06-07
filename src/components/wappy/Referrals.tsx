@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Share2, UserPlus, Gift, ArrowRight } from "lucide-react";
+import React from "react";
 
 const REF_LINK = "https://wa.me/573226429963?text=Hola,%20quiero%20mi%20link%20de%20referido%20de%20Wappy";
 
@@ -21,13 +22,13 @@ export function Referrals() {
 
         <div className="mt-14 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-2">
           {steps.map((s, i) => (
-            <div key={s.title}>
+            <React.Fragment key={s.title}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
-                className="bg-white rounded-2xl p-7 border border-blue/10 text-center w-full md:w-auto"
+                className="bg-white rounded-2xl p-7 border border-blue/10 text-center w-full md:w-[280px]"
               >
                 <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-blue to-sky grid place-items-center text-white shadow-glow-sm">
                   <s.icon size={22} />
@@ -38,15 +39,15 @@ export function Referrals() {
               </motion.div>
               {i < steps.length - 1 && (
                 <>
-                  <div className="hidden md:flex justify-center py-2 md:px-2">
+                  <div className="hidden md:flex items-center justify-center px-1">
                     <ArrowRight size={28} className="text-blue" />
                   </div>
-                  <div className="md:hidden flex justify-center py-3">
+                  <div className="md:hidden flex items-center justify-center py-2">
                     <ArrowRight size={20} className="text-blue transform rotate-90" />
                   </div>
                 </>
               )}
-            </div>
+            </React.Fragment>
           ))}
         </div>
 

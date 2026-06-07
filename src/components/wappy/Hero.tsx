@@ -86,7 +86,7 @@ export function Hero() {
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-blue text-white font-medium shadow-glow hover:shadow-[0_0_60px_rgba(0,87,255,0.6)] transition-shadow"
             >
-              Empezar 2 semanas gratis
+              Empieza 2 semanas gratis
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a

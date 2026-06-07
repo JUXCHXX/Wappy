@@ -116,7 +116,7 @@ export function Pricing() {
                       : "bg-ink text-white hover:bg-blue"
                   }`}
                 >
-                  Empezar gratis
+                  Empieza gratis
                 </a>
               </motion.div>
             );

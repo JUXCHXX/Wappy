@@ -55,7 +55,7 @@ export function Nav() {
           rel="noopener noreferrer"
           className="hidden md:inline-flex items-center px-5 py-2.5 rounded-2xl bg-blue text-white text-sm font-medium hover:shadow-glow transition-shadow"
         >
-          Empezar gratis
+          Empieza gratis
         </a>
 
         <button
@@ -92,7 +92,7 @@ export function Nav() {
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex justify-center px-5 py-3 rounded-2xl bg-blue text-white font-medium"
               >
-                Empezar gratis
+                Empieza gratis
               </a>
             </div>
           </motion.div>

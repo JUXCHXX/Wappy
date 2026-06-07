@@ -37,7 +37,7 @@ export function FinalCTA() {
           rel="noopener noreferrer"
           className="mt-10 inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-blue font-semibold text-lg hover:scale-[1.02] transition-transform shadow-2xl"
         >
-          Empezar ahora
+          Empieza ahora
           <ArrowRight size={20} />
         </a>
       </div>

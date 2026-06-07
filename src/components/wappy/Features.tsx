@@ -5,7 +5,7 @@ import { ChatMock } from "./ChatMock";
 const features = [
   { icon: Bot, title: "IA que habla como tú", desc: "Aprende tu tono, tus precios y tus respuestas." },
   { icon: Calendar, title: "Agendamiento automático", desc: "Reserva citas en tu calendario sin intervención." },
-  { icon: CreditCard, title: "Verificación de pagos", desc: "Confirma abonos por Nequi, Daviplata o transferencia." },
+  { icon: CreditCard, title: "Verificación de pagos", desc: "Confirma pagos por Bizum, transferencia o tarjeta." },
   { icon: Receipt, title: "Factura automática", desc: "Genera y envía comprobantes apenas se confirma el pago." },
   { icon: BarChart3, title: "Reporte nocturno", desc: "Cada noche recibes un resumen de citas, pagos y conversaciones." },
   { icon: RotateCcw, title: "Reagendamiento con código", desc: "Tus clientes mueven citas con un código único, sin llamarte." },
