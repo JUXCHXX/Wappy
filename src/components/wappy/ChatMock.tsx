@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 type Msg = { from: "user" | "bot"; text: string; delay: number };
 
 const script: Msg[] = [
-  { from: "user", text: "Hola, ¿tienen cita el sábado?", delay: 0 },
-  { from: "bot", text: "¡Hola! 👋 Sí, tenemos disponibles el sábado a las 10am, 2pm y 4pm. ¿Cuál prefieres?", delay: 1200 },
-  { from: "user", text: "A las 2pm", delay: 3000 },
-  { from: "bot", text: "Perfecto ✅ Para confirmar, te pido un abono de $20.000. Aquí tienes el link: nequi.co/wappy/...", delay: 4400 },
-  { from: "user", text: "Listo, ya pagué", delay: 6200 },
-  { from: "bot", text: "Confirmado 🎉 Te espero el sábado a las 2pm. Tu código de reagendamiento es WP-4821.", delay: 7600 },
+  { from: "user", text: "Hola, ¿tenéis cita el sábado?", delay: 0 },
+  { from: "bot", text: "¡Hola! 👋 Sí, tenemos disponibles el sábado a las 10h, 14h y 16h. ¿Cuál te viene mejor?", delay: 1200 },
+  { from: "user", text: "A las 14h", delay: 3000 },
+  { from: "bot", text: "Perfecto ✅ Para confirmar, te pido un pago de 20€. Aquí tienes el enlace: bizum.es/wappy/...", delay: 4400 },
+  { from: "user", text: "Listo, ya he pagado", delay: 6200 },
+  { from: "bot", text: "Confirmado 🎉 Te esperamos el sábado a las 14h. Tu código de reagendamiento es WP-4821.", delay: 7600 },
 ];
 
 export function ChatMock({ variant = "phone" }: { variant?: "phone" | "wide" }) {
