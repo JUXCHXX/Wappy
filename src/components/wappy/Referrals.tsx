@@ -19,15 +19,15 @@ export function Referrals() {
           <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-ink">Recomienda y gana</h2>
         </div>
 
-        <div className="mt-14 grid md:grid-cols-3 gap-6 md:gap-3 items-stretch relative">
+        <div className="mt-14 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-2">
           {steps.map((s, i) => (
-            <div key={s.title} className="relative flex md:contents">
+            <div key={s.title}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
-                className="flex-1 bg-white rounded-2xl p-7 border border-blue/10 text-center"
+                className="bg-white rounded-2xl p-7 border border-blue/10 text-center w-full md:w-auto"
               >
                 <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-blue to-sky grid place-items-center text-white shadow-glow-sm">
                   <s.icon size={22} />
@@ -37,9 +37,14 @@ export function Referrals() {
                 <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
               </motion.div>
               {i < steps.length - 1 && (
-                <div className="hidden md:flex items-center justify-center px-2 text-blue">
-                  <ArrowRight size={28} />
-                </div>
+                <>
+                  <div className="hidden md:flex justify-center py-2 md:px-2">
+                    <ArrowRight size={28} className="text-blue" />
+                  </div>
+                  <div className="md:hidden flex justify-center py-3">
+                    <ArrowRight size={20} className="text-blue transform rotate-90" />
+                  </div>
+                </>
               )}
             </div>
           ))}

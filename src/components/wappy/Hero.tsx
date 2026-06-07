@@ -1,17 +1,22 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Zap } from "lucide-react";
+import { DitheringShader } from "../ui/dithering-shader";
 
 const WA_LINK = "https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%20prueba%20gratis%20de%20Wappy";
 
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen overflow-hidden grain bg-night text-white">
-      {/* Image bg for mobile */}
-      <img
-        src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1080&q=70"
-        alt="background"
-        className="absolute inset-0 w-full h-full object-cover opacity-80 md:hidden"
-      />
+      {/* Dithering shader animation for mobile */}
+      <div className="absolute inset-0 md:hidden">
+        <DitheringShader
+          colorBack="#0A0F2C"
+          colorFront="#2563EB"
+          pxSize={3}
+          speed={0.6}
+          style={{ height: "100%", opacity: 0.8 }}
+        />
+      </div>
 
       {/* Video bg for desktop */}
       <video
@@ -44,7 +49,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sky/40 bg-white/5 backdrop-blur-md text-xs font-mono tracking-wide text-sky animate-pulse-glow"
           >
             <Zap size={14} />
-            Automatización con IA · Barranquilla
+            Automatización con IA · España
           </motion.div>
 
           <motion.h1
@@ -65,7 +70,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-6 text-lg lg:text-xl text-mist max-w-xl leading-relaxed"
           >
-            Automatiza respuestas, agenda citas y cobra abonos con
+            Automatiza respuestas, agenda citas y cobra pagos con
             Inteligencia Artificial. Listo en 24 horas.
           </motion.p>
 

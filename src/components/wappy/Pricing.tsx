@@ -7,25 +7,25 @@ const WA_LINK = "https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%2
 const plans = [
   {
     name: "Básico",
-    monthly: 80000,
+    monthly: 29,
     features: ["Hasta 500 conversaciones/mes", "Respuestas con IA", "Agendamiento básico", "Soporte por chat"],
     highlight: false,
   },
   {
     name: "Pro",
-    monthly: 120000,
+    monthly: 49,
     features: ["Conversaciones ilimitadas", "Verificación de pagos", "Reporte nocturno", "Reagendamiento con código", "Soporte prioritario"],
     highlight: true,
   },
   {
     name: "Premium",
-    monthly: 180000,
+    monthly: 79,
     features: ["Todo lo de Pro", "Multi-agente humano", "Integración con tu CRM", "Reportes avanzados", "Manager dedicado"],
     highlight: false,
   },
 ];
 
-const fmt = (n: number) => "$" + n.toLocaleString("es-CO");
+const fmt = (n: number) => n.toLocaleString("es-ES") + "€";
 
 export function Pricing() {
   const [annual, setAnnual] = useState(false);
@@ -56,6 +56,13 @@ export function Pricing() {
               Anual <span className="text-xs opacity-80">−20%</span>
             </button>
           </div>
+
+          {annual && (
+            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue to-sky text-white text-sm font-medium">
+              <span>🎉</span>
+              <span>Oferta de lanzamiento — Suscríbete anual y paga solo 10 meses. ¡2 meses gratis!</span>
+            </div>
+          )}
         </div>
 
         <div className="mt-14 grid lg:grid-cols-3 gap-6 items-stretch">
