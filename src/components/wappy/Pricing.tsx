@@ -7,19 +7,19 @@ const WA_LINK = "https://wa.me/573226429963?text=Hola,%20quiero%20empezar%20mi%2
 const plans = [
   {
     name: "Básico",
-    monthly: 29,
+    monthly: 19,
     features: ["Hasta 500 conversaciones/mes", "Respuestas con IA", "Agendamiento básico", "Soporte por chat"],
     highlight: false,
   },
   {
     name: "Pro",
-    monthly: 49,
+    monthly: 39,
     features: ["Conversaciones ilimitadas", "Verificación de pagos", "Reporte nocturno", "Reagendamiento con código", "Soporte prioritario"],
     highlight: true,
   },
   {
     name: "Premium",
-    monthly: 79,
+    monthly: 69,
     features: ["Todo lo de Pro", "Multi-agente humano", "Integración con tu CRM", "Reportes avanzados", "Manager dedicado"],
     highlight: false,
   },
